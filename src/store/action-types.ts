@@ -1,0 +1,8 @@
+export enum ActionTypes {
+  GET_POSTS = 'GET_POSTS',
+  DELETE_POST = 'DELETE_POST',
+  REGISTER = 'REGISTER',
+  LOGIN = 'LOGIN',
+  LOGOUT = 'LOGOUT',
+  GET_USER_DATA = 'GET_USER_DATA',
+}
