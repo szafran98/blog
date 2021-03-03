@@ -11,42 +11,16 @@
         </template>
       </Suspense>
     </div>
-    <ModalForm v-if="showModal" />
-    <ModalPopup />
+    <Modal v-if="modal.state" />
   </div>
-
-  <!--
-  <Navbar />
-  <Suspense>
-    <template #default>
-      <router-view />
-    </template>
-    <template #fallback>
-      <h1>Loading...</h1>
-    </template>
-  </Suspense>
-  -->
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  ref,
-  onBeforeMount,
-  reactive,
-  onRenderTriggered,
-  onUpdated,
-  computed,
-  provide,
-} from 'vue';
-import { onBeforeRouteUpdate } from 'vue-router';
+import { defineComponent, computed, provide } from 'vue';
 import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
 import Navbar from '@/components/Navbar.vue';
-import Login from '@/components/auth/Login.vue';
-import ModalForm from '@/components/ModalForm.vue';
-import ModalPopup from '@/components/ModalPopup.vue';
+import Modal from '@/components/Modal.vue';
 
 function getUserData() {
   return useStore().getters.userData;
@@ -56,14 +30,13 @@ export default defineComponent({
   name: 'App',
   components: {
     Navbar,
-    ModalForm,
-    ModalPopup,
+    Modal,
   },
   setup() {
     const store = useStore();
     //let isFetching = ref(true)
     //let userData
-    const showModal = computed(() => store.state.showModal);
+    const modal = computed(() => store.state.modal);
 
     provide(
       'isLogged',
@@ -72,7 +45,7 @@ export default defineComponent({
 
     store.dispatch(ActionTypes.GET_USER_DATA);
     return {
-      showModal,
+      modal,
     };
   },
 });

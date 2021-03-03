@@ -36,13 +36,13 @@ export type Store = Omit<
 export interface State {
   posts: any[];
   userData: any;
-  showModal: boolean;
+  modal: any;
 }
 
 export const state: State = {
   posts: [],
   userData: null,
-  showModal: false,
+  modal: false,
 };
 
 // define injection key

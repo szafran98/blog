@@ -7,7 +7,7 @@ export type Mutations<S = State> = {
   [MutationTypes.DELETE_POST](state: S, payload: any): void;
   [MutationTypes.STORE_USER_DATA](state: S, payload: any): void;
   [MutationTypes.REMOVE_USER_DATA](state: S): void;
-  [MutationTypes.CHANGE_MODAL_STATE](state: S, payload: boolean): void;
+  [MutationTypes.CHANGE_MODAL_STATE](state: S, payload: any): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -24,8 +24,9 @@ export const mutations: MutationTree<State> & Mutations = {
   [MutationTypes.REMOVE_USER_DATA](state: State) {
     state.userData = null;
   },
-  [MutationTypes.CHANGE_MODAL_STATE](state: State, payload: boolean) {
-    state.showModal = payload;
-    console.log(state.showModal);
+  [MutationTypes.CHANGE_MODAL_STATE](state: State, payload: any) {
+    console.log(payload);
+    state.modal = payload;
+    console.log(state.modal);
   },
 };

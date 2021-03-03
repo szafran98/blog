@@ -1,27 +1,21 @@
 <template>
-  <transition name="modal" @click="changeModalState">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <div class="modal-container-header">
-            <input
-              type="button"
-              value="Login"
-              :class="{ 'not-active-btn': selectedForm === 'register' }"
-              @click="selectedForm = 'login'"
-            />
-            <input
-              type="button"
-              value="Register"
-              :class="{ 'not-active-btn': selectedForm === 'login' }"
-              @click="selectedForm = 'register'"
-            />
-          </div>
-          <component :is="activeComponent"></component>
-        </div>
-      </div>
+  <div class="auth-form-container">
+    <div class="modal-container-header">
+      <input
+        type="button"
+        value="Login"
+        :class="{ 'not-active-btn': selectedForm === 'register' }"
+        @click="selectedForm = 'login'"
+      />
+      <input
+        type="button"
+        value="Register"
+        :class="{ 'not-active-btn': selectedForm === 'login' }"
+        @click="selectedForm = 'register'"
+      />
     </div>
-  </transition>
+    <component :is="activeComponent"></component>
+  </div>
 </template>
 
 <script lang="ts">
@@ -43,7 +37,7 @@ export default defineComponent({
     Register,
   },
   setup() {
-    const store = useStore();
+    //const store = useStore();
     const selectedForm = ref('login');
 
     const activeComponent = computed(() => {
@@ -51,24 +45,24 @@ export default defineComponent({
       return Register;
     });
 
-    const changeModalState = (event: any) => {
+    /*const changeModalState = (event: any) => {
       console.log(event.target);
 
       if (event.target === document.querySelector('.modal-wrapper'))
         store.commit(MutationTypes.CHANGE_MODAL_STATE, false);
-    };
+    };*/
 
     return {
       activeComponent,
       selectedForm,
-      changeModalState,
+      //changeModalState,
     };
   },
 });
 </script>
 
 <style scoped lang="scss">
-.modal-container {
+.auth-form-container {
   padding: 0;
 }
 

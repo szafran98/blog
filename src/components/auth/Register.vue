@@ -24,11 +24,6 @@
         Passwords not match
       </div>
       <div id="login-button-container">
-        <div style="letter-spacing: 0">
-          {{ form.password === form.password1 }}
-        </div>
-        <div style="letter-spacing: 0">{{ arePasswordsSame }}</div>
-        <div style="letter-spacing: 0">{{ arePasswordsSame }}</div>
         <button
           type="submit"
           class="pure-button pure-button-primary button-large"
@@ -38,9 +33,6 @@
         </button>
       </div>
     </form>
-    <a href="" style="letter-spacing: 0; text-decoration: none; color: #0078e7"
-      >Forgot password?</a
-    >
   </div>
 </template>
 

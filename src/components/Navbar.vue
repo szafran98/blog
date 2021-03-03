@@ -28,14 +28,6 @@
       </nav>
     </div>
   </div>
-  <!--
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link v-if="!isLogged" :to="{ name: 'Login' }">Login</router-link>
-    <a v-if="isLogged" @click="logout">Logout</a>
-    <div v-if="isLogged">Logged as {{ userData.username }}</div>
-  </div>
-  -->
 </template>
 
 <script lang="ts">
@@ -43,6 +35,7 @@ import { defineComponent, computed, inject } from 'vue';
 import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
 import { MutationTypes } from '@/store/mutation-types';
+import { ModalTypes } from '@/ModalTypes';
 
 export default defineComponent({
   name: 'Navbar',
@@ -53,7 +46,10 @@ export default defineComponent({
     const isLogged = inject('isLogged');
     const logout = () => store.dispatch(ActionTypes.LOGOUT);
     const changeModalState = () =>
-      store.commit(MutationTypes.CHANGE_MODAL_STATE, true);
+      store.commit(MutationTypes.CHANGE_MODAL_STATE, {
+        state: true,
+        type: ModalTypes.FORM,
+      });
 
     return {
       userData,

@@ -14,7 +14,9 @@ export const isEmail = () => {
 };
 
 export const isEmailAvailable = () => {
-  return async (input: any): Promise<string[]> => {
+  return async (input: any): Promise<any> => {
+    console.log(isEmail()(input));
+    if (isEmail()(input) !== null) return;
     const response = await axios.get(
       `http://127.0.0.1:8000/auth/users/is_email_busy/${input}/`,
     );
