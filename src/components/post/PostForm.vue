@@ -8,28 +8,35 @@
         rows="10"
         v-model="postContent"
       ></textarea>
+      <div v-html="compiledMarkdown"></div>
       <button type="submit">Add post</button>
     </form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { usePosts } from '@/composable/usePosts'
+import { defineComponent, ref, computed } from 'vue';
+import { usePosts } from '@/composable/usePosts';
+import marked from 'marked';
 
 export default defineComponent({
   name: 'PostForm',
   setup() {
-    const { addPost } = usePosts()
+    const { addPost } = usePosts();
 
-    const postContent = ref('')
+    const postContent = ref('');
+
+    const compiledMarkdown = computed(() =>
+      marked(postContent.value, { sanitize: true }),
+    );
 
     return {
       addPost,
       postContent,
-    }
+      compiledMarkdown,
+    };
   },
-})
+});
 </script>
 
 <style scoped></style>

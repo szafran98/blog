@@ -1,12 +1,12 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store, {key} from './store'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store, { key } from './store';
 
-const app = createApp(App)
-app.use(store, key)
-app.use(router)
-app.mount('#app')
+const app = createApp(App);
+app.use(store, key);
+app.use(router);
+app.mount('#app');
 //app.use(VueCookies)
 
-export { app }
+export { app };
