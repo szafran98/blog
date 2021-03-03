@@ -7,9 +7,17 @@
       @submit.prevent="register"
     >
       <legend>Registration</legend>
-      <InputUsername v-model="form.username" @input="modify.setUsername" />
+      <InputUsername
+        v-model="form.username"
+        @input="modify.setUsername"
+        :validators="usernameValidators"
+      />
       <Suspense>
-        <InputEmail v-model="form.email" @input="modify.setEmail" />
+        <InputEmail
+          v-model="form.email"
+          @input="modify.setEmail"
+          :validators="emailValidators"
+        />
       </Suspense>
       <span class="pure-form-message">
         <!-- email error -->
@@ -43,6 +51,11 @@ import InputEmail from '@/components/form/InputEmail.vue';
 import InputPassword from '@/components/form/InputPassword.vue';
 import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
+import {
+  isEmail,
+  isEmailAvailable,
+  minLength,
+} from '@/composable/useInputValidator';
 
 const setProperty = (source: any, key: any) => (value: any) =>
   (source[key] = value);
@@ -65,6 +78,9 @@ export default defineComponent({
       password1: '',
     });
 
+    const usernameValidators = [minLength(3)];
+    const emailValidators = [isEmailAvailable(), isEmail()];
+
     const register = () => {
       //if (!formRef.value?.checkValidity()) return;
 
@@ -78,6 +94,8 @@ export default defineComponent({
     return {
       form,
       register,
+      usernameValidators,
+      emailValidators,
       arePasswordsSame,
       modify: {
         setEmail: setProperty(form, 'email'),

@@ -26,6 +26,10 @@ export default defineComponent({
       type: String,
       required: false,
     },
+    validators: {
+      type: Array,
+      required: false,
+    },
   },
   emits: ['input'],
   setup(props: any, { emit }) {
@@ -33,8 +37,10 @@ export default defineComponent({
 
     //const placeholder = toRef(props, 'placeholder');
 
-    const { input, errors } = useInputValidator(props.value, [], (value) =>
-      emit('input', value),
+    const { input, errors } = useInputValidator(
+      props.value,
+      props.validator || [],
+      (value) => emit('input', value),
     );
 
     return {

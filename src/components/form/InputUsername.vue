@@ -23,12 +23,16 @@ export default defineComponent({
   },
   props: {
     value: String,
+    validators: {
+      type: Array,
+      required: false,
+    },
   },
   emits: ['input'],
-  setup(props, { emit }) {
+  setup(props: any, { emit }) {
     const { input, errors } = useInputValidator(
       props.value,
-      [minLength(4)],
+      props.validators,
       (value) => emit('input', value),
     );
 

@@ -7,11 +7,18 @@
       @submit.prevent="login"
     >
       <legend>Authorization</legend>
-      <InputEmail v-model="form.email" @input="form.email = $event" />
+      <InputEmail
+        v-model:value="form.email"
+        @input="form.email = $event"
+        :validators="emailValidators"
+      />
       <span class="pure-form-message">
         <!-- email error -->
       </span>
-      <InputPassword v-model="form.password" @input="form.password = $event" />
+      <InputPassword
+        v-model:value="form.password"
+        @input="form.password = $event"
+      />
       <div id="login-button-container">
         <button
           type="submit"
@@ -52,6 +59,8 @@ export default defineComponent({
       password: '',
     });
 
+    const emailValidators = [isEmail()];
+
     //const errors = ref({});
 
     const login = () => {
@@ -64,6 +73,7 @@ export default defineComponent({
     return {
       form,
       formRef,
+      emailValidators,
       login,
     };
   },

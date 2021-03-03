@@ -7,7 +7,7 @@ export const minLength = (min: number) => {
 };
 
 export const isEmail = () => {
-  console.log('email validator');
+  //console.log('email validator');
   const re = /\S+@\S+\.\S+/;
   return (input: string) =>
     re.test(input) ? null : 'Must be a valid email address';
@@ -15,7 +15,7 @@ export const isEmail = () => {
 
 export const isEmailAvailable = () => {
   return async (input: any): Promise<any> => {
-    console.log(isEmail()(input));
+    //console.log(isEmail()(input));
     if (isEmail()(input) !== null) return;
     const response = await axios.get(
       `http://127.0.0.1:8000/auth/users/is_email_busy/${input}/`,
@@ -23,11 +23,6 @@ export const isEmailAvailable = () => {
     console.log(response);
     return response.data.message;
   };
-};
-
-const validators = {
-  minLength,
-  isEmail,
 };
 
 export default function (
@@ -39,10 +34,12 @@ export default function (
   const errors = ref([] as any[]);
   watch(input, async (value) => {
     //errors.value = validators.map((validator: any) => validator(value));
+    // if (validators.length !== 0) {
     errors.value = await Promise.all(
       validators.map((validator: any) => validator(value)),
     );
     onValidate(value);
+    //}
   });
 
   return {
