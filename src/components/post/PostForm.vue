@@ -18,6 +18,7 @@
 import { defineComponent, ref, computed } from 'vue';
 import { usePosts } from '@/composable/usePosts';
 import marked from 'marked';
+import hljs from 'highlight.js/lib/core';
 
 export default defineComponent({
   name: 'PostForm',
@@ -27,7 +28,12 @@ export default defineComponent({
     const postContent = ref('');
 
     const compiledMarkdown = computed(() =>
-      marked(postContent.value, { sanitize: true }),
+      marked(postContent.value, {
+        highlight: function (code) {
+          console.log(code);
+          return hljs.highlightAuto(code).value;
+        },
+      }),
     );
 
     return {

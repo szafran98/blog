@@ -11,9 +11,7 @@
         <a href="" class="post-category post-category-pure">HTML</a>
       </p>
     </header>
-    <div class="post-content">
-      <p>{{ postData.content }}</p>
-    </div>
+    <div class="post-content" v-html="compiledMarkdown"></div>
     <div class="post-footer post-meta">
       {{ postDatePub }} |
       {{ postData.likes_count }}
@@ -28,6 +26,11 @@ import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
 import { usePosts } from '@/composable/usePosts';
 import { app } from '@/main';
+import marked from 'marked';
+import hljs from 'highlight.js/lib/core';
+import 'highlight.js/styles/monokai.css';
+
+import highlight from 'highlight.js';
 
 export default defineComponent({
   name: 'Post',
@@ -40,18 +43,19 @@ export default defineComponent({
     const postDatePub = computed(() => {
       return new Date(props.postData.date_pub_timestamp * 1000).toDateString();
     });
-    //console.log(data)
-    //console.log(toRefs(postData))
 
-    /*
-            const removePost = () => {
-                store.dispatch(ActionTypes.DELETE_POST, props.postData.id)
-            }
-
-             */
+    const compiledMarkdown = computed(() =>
+      marked(props.postData.content, {
+        highlight: function (code) {
+          console.log(code);
+          return hljs.highlightAuto(code).value;
+        },
+      }),
+    );
 
     return {
       postDatePub,
+      compiledMarkdown,
       deletePost,
     };
   },
