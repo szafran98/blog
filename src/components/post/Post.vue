@@ -11,7 +11,7 @@
         <a href="" class="post-category post-category-pure">HTML</a>
       </p>
     </header>
-    <div class="post-content" v-html="compiledMarkdown"></div>
+    <div class="post-content line-numbers" v-html="compiledMarkdown"></div>
     <div class="post-footer post-meta">
       {{ postDatePub }} |
       {{ postData.likes_count }}
@@ -29,6 +29,7 @@ import { app } from '@/main';
 import marked from 'marked';
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/monokai.css';
+import '@/assets/prism.css';
 
 import highlight from 'highlight.js';
 
@@ -45,12 +46,15 @@ export default defineComponent({
     });
 
     const compiledMarkdown = computed(() =>
-      marked(props.postData.content, {
+      marked(
+        props.postData
+          .content /*{
         highlight: function (code) {
           console.log(code);
           return hljs.highlightAuto(code).value;
         },
-      }),
+      }*/,
+      ),
     );
 
     return {

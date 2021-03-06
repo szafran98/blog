@@ -8,17 +8,22 @@
         rows="10"
         v-model="postContent"
       ></textarea>
-      <div v-html="compiledMarkdown"></div>
+      <div id="compiled-md" v-html="compiledMarkdown"></div>
       <button type="submit">Add post</button>
     </form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, computed, watch } from 'vue';
 import { usePosts } from '@/composable/usePosts';
 import marked from 'marked';
-import hljs from 'highlight.js/lib/core';
+import * as Prism from 'prismjs';
+/*
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
+import 'prismjs/plugins/line-numbers/prism-line-numbers';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/themes/prism-tomorrow.css';*/
 
 export default defineComponent({
   name: 'PostForm',
@@ -28,12 +33,14 @@ export default defineComponent({
     const postContent = ref('');
 
     const compiledMarkdown = computed(() =>
-      marked(postContent.value, {
+      marked(
+        postContent.value /*{
         highlight: function (code) {
           console.log(code);
           return hljs.highlightAuto(code).value;
         },
-      }),
+      }*/,
+      ),
     );
 
     return {

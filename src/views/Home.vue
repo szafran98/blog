@@ -22,7 +22,13 @@ import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
 import Post from '@/components/post/Post.vue';
 import PostForm from '@/components/post/PostForm.vue';
+import CodeSnippet from '@/components/CodeSnippet.vue';
 import { usePosts } from '@/composable/usePosts';
+import * as Prism from 'prismjs';
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
+import 'prismjs/plugins/line-numbers/prism-line-numbers';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/themes/prism-tomorrow.css';
 
 export default defineComponent({
   name: 'Home',
@@ -35,6 +41,10 @@ export default defineComponent({
 
     const { posts, getPosts } = usePosts();
     const isLogged = inject('isLogged');
+
+    onMounted(() => {
+      Prism.highlightAll();
+    });
 
     //const posts = computed(() => store.getters.posts)
 
@@ -122,6 +132,11 @@ export default defineComponent({
     font-weight: 300;
     color: rgb(176, 202, 219);
     margin: 0;
+  }
+
+  pre {
+    border: 0;
+    border-radius: 0;
   }
 }
 </style>
