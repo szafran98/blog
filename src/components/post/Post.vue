@@ -1,5 +1,5 @@
 <template>
-  <section id="post{{ id }}" class="post">
+  <section :id="'post' + id" class="post">
     <header class="post-header">
       <p class="post-meta">
         By
@@ -14,7 +14,11 @@
         </template>
       </p>
     </header>
-    <div class="post-content line-numbers" v-html="compiledMarkdown"></div>
+    <div
+      :id="'post' + id + '-content'"
+      class="post-content line-numbers"
+      v-html="compiledMarkdown"
+    ></div>
     <div class="post-footer post-meta">
       {{ postDatePub }} |
       {{ postData.likes_count }}
@@ -30,10 +34,14 @@ import { ActionTypes } from '@/store/action-types';
 import { usePosts } from '@/composable/usePosts';
 import { app } from '@/main';
 import marked from 'marked';
-import 'highlight.js/styles/monokai.css';
-import '@/assets/prism.css';
+//import '@/assets/prism.css';
 
-import * as Prism from 'prismjs';
+import highlight from 'highlight.js';
+import hljs from 'highlight.js/lib/core';
+import 'highlight.js/styles/monokai.css';
+import 'highlight.js/lib/languages/typescript';
+
+//import * as Prism from 'prismjs';
 
 export default defineComponent({
   name: 'Post',
@@ -48,12 +56,26 @@ export default defineComponent({
       return new Date(props.postData.date_pub_timestamp * 1000).toDateString();
     });
 
+    const setCodeSampleClass = () => {
+      const parent = document.getElementById(`post${id.value}-content`);
+      //console.log(parent);
+      try {
+        const preElement = parent!.firstElementChild;
+        if (preElement!.tagName === 'PRE') {
+          preElement!.classList.add('hljs');
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
     const compiledMarkdown = computed(() =>
       marked(
         props.postData
           .content /*{
         highlight: function (code) {
-          console.log(code);
+          //console.log(code);
+          setTimeout(() => setCodeSampleClass(), 10);
           return hljs.highlightAuto(code).value;
         },
       }*/,

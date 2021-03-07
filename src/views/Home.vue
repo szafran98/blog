@@ -29,7 +29,6 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import 'prismjs/plugins/line-numbers/prism-line-numbers';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/themes/prism-tomorrow.css';
-
 export default defineComponent({
   name: 'Home',
   components: {
@@ -79,7 +78,7 @@ export default defineComponent({
   @media screen and (min-width: 48em) {
     .pure-u-md-1-4,
     .pure-u-md-6-24 {
-      width: 25%;
+      width: 20%;
       display: inline-block;
       letter-spacing: normal;
       word-spacing: normal;
@@ -107,14 +106,14 @@ export default defineComponent({
   @media (min-width: 48em) {
     .content {
       padding: 2em 3em 0;
-      margin-left: 25%;
+      margin-left: 20%;
     }
   }
 
   @media screen and (min-width: 48em) {
     .pure-u-md-18-24,
     .pure-u-md-3-4 {
-      width: 75%;
+      width: 80%;
       display: inline-block;
       letter-spacing: normal;
       word-spacing: normal;

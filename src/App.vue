@@ -85,4 +85,12 @@ html {
     }
   }
 }
+
+.content {
+  @media screen and (min-width: 48em) {
+    .home .pure-u-md-1-4 {
+      width: 10%;
+    }
+  }
+}
 </style>
