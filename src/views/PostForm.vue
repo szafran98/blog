@@ -1,29 +1,45 @@
 <template>
   <div class="post-form-container">
-    <!--<Editor
-      api-key="yirqbw8h7cu3qp8csaht94rcx7ya5xsr03jcyyjkywp4qjgh"
-      v-model="postContent"
-      :init="{
-        plugins: ['codesample'],
-        toolbar:
-          'codesample bold italic underline, link image, alignleft, aligncenter, alignright',
-        codesample_global_prismjs: true,
-      }"
-    />-->
     <form
       action=""
       class="post-form"
       @submit.prevent="addPostPrismFix(postContent)"
+      style="display: grid"
     >
-      <textarea
-        name="new-post-input"
-        id="new-post-input"
-        rows="10"
-        v-model="postContent"
-        style="width: 100%; resize: vertical"
-      ></textarea>
-      <div id="compiled-md" v-html="compiledMarkdown"></div>
-      <button type="submit">Add post</button>
+      <Tagify :on-change="updateTags" />
+      <input
+        type="text"
+        placeholder="Title"
+        style="width: 45%; padding: 10px; margin: 5px"
+      />
+      <!--<input
+        type="text"
+        placeholder="Tags"
+        style="width: 45%; padding: 10px; margin: 5px"
+      />-->
+      <div class="pure-g" style="gap: 1%">
+        <div class="pure-u-1-2" style="width: 49%">
+          <textarea
+            name="new-post-input"
+            id="new-post-input"
+            rows="10"
+            v-model="postContent"
+            style="width: 100%; resize: vertical; height: 97%"
+          ></textarea>
+        </div>
+        <div
+          id="compiled-md"
+          class="pure-u-1-2"
+          v-html="compiledMarkdown"
+          style="width: 49%"
+        ></div>
+      </div>
+      <button
+        type="submit"
+        class="pure-button pure-button-primary button-large"
+      >
+        Add post
+      </button>
     </form>
   </div>
 </template>
@@ -45,15 +61,35 @@ import 'highlight.js/styles/monokai.css';
 import 'highlight.js/lib/languages/typescript';
 import 'highlight.js/lib/languages/javascript';
 
+import Tagify from '@yaireo/tagify/dist/tagify.vue';
+import '@yaireo/tagify/dist/tagify.css';
+
 export default defineComponent({
   name: 'PostForm',
   components: {
     //Editor,
+    Tagify,
   },
   setup() {
     const { addPost } = usePosts();
 
     const postContent = ref('');
+    const tags = ref([] as string[]);
+
+    const updateTags = (e: any) => {
+      const tagsList = JSON.parse(e.target.value);
+      for (const tag of tagsList) {
+        const isTagAlready = (tag: any) => {
+          console.log(Array.from(tags.value));
+          console.log(tag.value);
+          if (!tags.value.find((t) => t === tag.value)) {
+            tags.value.push(tag.value);
+          }
+        };
+        isTagAlready(tag);
+      }
+      console.log(tags.value);
+    };
 
     const addPostPrismFix = (content: string) => {
       addPost(content).then(() => {
@@ -111,14 +147,18 @@ export default defineComponent({
       ),
     );
 
-    watch(postContent, () => {
-      const parent = document.getElementById('compiled-md');
+    watch(tags, () => {
+      //const tagsList = tags.value.split(',');
+      //console.log(tagsList);
+      //const tagList = tags.value.spl
     });
 
     return {
+      updateTags,
       addPost,
       addPostPrismFix,
       postContent,
+      tags,
       compiledMarkdown,
     };
   },

@@ -1,5 +1,4 @@
 <template>
-  <PostForm v-if="isLogged" />
   <div class="posts">
     <h1 class="content-subhead">Recent posts</h1>
     <div v-for="post in posts" :key="post.id">
@@ -21,7 +20,7 @@ import {
 import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
 import Post from '@/components/post/Post.vue';
-import PostForm from '@/components/post/PostForm.vue';
+import PostForm from '@/views/PostForm.vue';
 import CodeSnippet from '@/components/CodeSnippet.vue';
 import { usePosts } from '@/composable/usePosts';
 import * as Prism from 'prismjs';
@@ -33,7 +32,6 @@ export default defineComponent({
   name: 'Home',
   components: {
     Post,
-    PostForm,
   },
   async setup() {
     //const store = useStore()
