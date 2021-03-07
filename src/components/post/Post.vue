@@ -1,5 +1,5 @@
 <template>
-  <section class="post">
+  <section id="post{{ id }}" class="post">
     <header class="post-header">
       <p class="post-meta">
         By
@@ -7,8 +7,11 @@
           {{ postData.author.username }}
         </a>
         under
-        <a href="" class="post-category post-category-design">CSS</a>
-        <a href="" class="post-category post-category-pure">HTML</a>
+        <!--<a href="" class="post-category post-category-design">CSS</a>
+        <a href="" class="post-category post-category-pure">HTML</a>-->
+        <template v-for="(tag, index) in postData.tags" :key="index">
+          <a href="" class="post-category post-category-pure">{{ tag }}</a>
+        </template>
       </p>
     </header>
     <div class="post-content line-numbers" v-html="compiledMarkdown"></div>
@@ -27,11 +30,10 @@ import { ActionTypes } from '@/store/action-types';
 import { usePosts } from '@/composable/usePosts';
 import { app } from '@/main';
 import marked from 'marked';
-import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/monokai.css';
 import '@/assets/prism.css';
 
-import highlight from 'highlight.js';
+import * as Prism from 'prismjs';
 
 export default defineComponent({
   name: 'Post',
@@ -41,6 +43,7 @@ export default defineComponent({
 
     const { deletePost } = usePosts();
 
+    const id = computed(() => props.postData.id);
     const postDatePub = computed(() => {
       return new Date(props.postData.date_pub_timestamp * 1000).toDateString();
     });
@@ -57,7 +60,10 @@ export default defineComponent({
       ),
     );
 
+    //Prism.highlightElement(document.getElementById(`post${id.value}`)!);
+
     return {
+      id,
       postDatePub,
       compiledMarkdown,
       deletePost,
