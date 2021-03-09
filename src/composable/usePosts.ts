@@ -3,6 +3,7 @@ import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
 import PostDataService from '@/services/PostDataService';
 import { PostResponse } from '@/types/types';
+import NewPost from '@/types/post/NewPost';
 
 const posts = ref([] as PostResponse[]);
 
@@ -22,11 +23,9 @@ export function usePosts() {
     }
   };
 
-  const addPost = async (content: string) => {
+  const addPost = async (postData: NewPost) => {
     try {
-      const response = await PostDataService.create({
-        content,
-      });
+      const response = await PostDataService.create(postData);
       console.log(response);
       posts.value.unshift(response.data);
     } catch (e) {

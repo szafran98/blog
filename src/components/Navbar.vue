@@ -11,7 +11,10 @@
             >
           </li>
           <li class="nav-item">
-            <router-link class="pure-button" :to="{ name: 'AddPost' }"
+            <router-link
+              class="pure-button"
+              v-if="isLogged"
+              :to="{ name: 'AddPost' }"
               >Add post</router-link
             >
           </li>
