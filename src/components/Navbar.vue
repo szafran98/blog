@@ -1,5 +1,15 @@
 <template>
-  <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <a
+    href="#menu"
+    id="menu-link"
+    class="menu-link"
+    @click="changeNavbarSize"
+    @mouseenter="changeHamburgerSize"
+    @mouseleave="changeHamburgerSize"
+  >
+    <i id="hamburger-icon" class="fas fa-bars fa-2x" style="color: white"></i>
+  </a>
+  <div id="menu" class="sidebar pure-u-1 pure-u-md-1-4">
     <div class="header">
       <h1 class="brand-title">A sample blog</h1>
       <h2 class="brand-tagline">Creating a blog layout</h2>
@@ -39,11 +49,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, inject } from 'vue';
+import { defineComponent, computed, inject, ref } from 'vue';
 import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
 import { MutationTypes } from '@/store/mutation-types';
 import { ModalTypes } from '@/ModalTypes';
+import { extendNavbar, minifyNavbar } from '@/utils/util-functions';
+import { onBeforeRouteUpdate } from 'vue-router';
 
 export default defineComponent({
   name: 'Navbar',
@@ -52,6 +64,8 @@ export default defineComponent({
 
     const userData = computed(() => store.getters.userData || '');
     const isLogged = inject('isLogged');
+    const isNavMinified = ref(true);
+
     const logout = () => store.dispatch(ActionTypes.LOGOUT);
     const changeModalState = () =>
       store.commit(MutationTypes.CHANGE_MODAL_STATE, {
@@ -59,17 +73,61 @@ export default defineComponent({
         type: ModalTypes.FORM,
       });
 
+    const changeNavbarSize = () => {
+      if (isNavMinified.value) {
+        extendNavbar();
+        isNavMinified.value = false;
+        console.log('extend');
+      } else {
+        minifyNavbar();
+        isNavMinified.value = true;
+        console.log('minify');
+      }
+    };
+
+    const changeHamburgerSize = (event: any) => {
+      const hamburger: HTMLElement = event.target.firstChild;
+      hamburger.classList.toggle('fa-3x');
+    };
+
     return {
       userData,
       isLogged,
       logout,
       changeModalState,
+      changeNavbarSize,
+      changeHamburgerSize,
     };
   },
 });
 </script>
 
 <style lang="scss">
+#menu-link {
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  background: #222222;
+
+  &:hover {
+    width: 50px;
+    height: 50px;
+    background-color: #3d5e5d;
+    box-shadow: 0px 1px 1px rgba(46, 229, 157, 0.4);
+    color: #fff;
+  }
+
+  #hamburger-icon {
+    margin-left: 4px;
+
+    &:hover {
+      ///transform: translateY(-7px);
+    }
+  }
+}
+
 @media (min-width: 48em) {
   .header {
     margin: 80% 2em 0;

@@ -1,9 +1,10 @@
 <template>
+  {{ id }}
   <div class="post-form-container" style="background: #3d4f5d">
     <form
       action=""
       class="post-form"
-      @submit.prevent="addPost(post)"
+      @submit.prevent="savePost"
       style="display: grid"
     >
       <input
@@ -13,7 +14,11 @@
         style="width: auto; padding: 10px; border: 1px solid #ddd"
       />
 
-      <Tagify :on-change="updateTags" style="background: white" />
+      <Tagify
+        :on-change="updateTags"
+        :value="post.tags"
+        style="background: white"
+      />
       <div class="pure-g" style="gap: 1.7%">
         <div class="pure-u-1-2" style="width: 49%">
           <textarea
@@ -21,14 +26,24 @@
             id="new-post-input"
             rows="10"
             v-model="post.content"
-            style="width: 100%; resize: vertical; height: 97%"
+            style="
+              width: 100%;
+              resize: vertical;
+              height: 97%;
+              border: 1px solid #ddd;
+            "
           ></textarea>
         </div>
         <div
           id="compiled-md"
           class="pure-u-1-2"
           v-html="compiledMarkdown"
-          style="width: 49%; background: white; overflow: auto"
+          style="
+            width: 49%;
+            background: white;
+            overflow: auto;
+            border: 1px solid #ddd;
+          "
         ></div>
       </div>
       <button
@@ -45,8 +60,15 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, watch, reactive } from 'vue';
+import {
+  useRouter,
+  onBeforeRouteLeave,
+  onBeforeRouteUpdate,
+  useRoute,
+} from 'vue-router';
 import { usePosts } from '@/composable/usePosts';
 import marked from 'marked';
+import { extendNavbar } from '@/utils/util-functions';
 import * as Prism from 'prismjs';
 /*
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
@@ -69,37 +91,93 @@ export default defineComponent({
     //Editor,
     Tagify,
   },
-  setup() {
-    const { addPost } = usePosts();
+  props: {
+    id: Number,
+  },
+  setup(props) {
+    const { addPost, editPost, getPost } = usePosts();
+    const router = useRouter();
+    const route = useRoute();
 
-    const post = reactive({
+    onBeforeRouteLeave(() => {
+      extendNavbar();
+    });
+
+    console.log(router.currentRoute.value.name === 'EditPost');
+
+    let post: any;
+    let funcToEvalOnSave: Function;
+    const savePost = () => {
+      funcToEvalOnSave(post).then(() => router.push({ name: 'Home' }));
+    };
+
+    if (router.currentRoute.value.name === 'AddPost') {
+      post = reactive({
+        title: '',
+        tags: [] as string[],
+        content: '',
+      });
+      funcToEvalOnSave = addPost;
+    } else if (router.currentRoute.value.name === 'EditPost') {
+      console.log(props.id);
+      post = reactive({
+        ...getPost(props.id as number),
+      });
+      funcToEvalOnSave = editPost;
+      console.log(post);
+    }
+    /*const post = reactive({
       title: '',
       tags: [] as string[],
       content: '',
-    });
+    });*/
+
+    const addBlogPost = () => {
+      addPost(post).then(() => router.push({ name: 'Home' }));
+    };
 
     //const postContent = ref('');
     //const tags = ref([] as string[]);
 
     const updateTags = (e: any) => {
+      console.log('hehehe');
+
+      const tagsList = JSON.parse(e.target.value);
+
+      const tags = [];
+      for (const tag of tagsList) {
+        tags.push(tag.value);
+      }
+
+      for (const tag of tags) {
+        const isTagAlready = (tag: any) => {
+          if (!post.tags.find((t: string) => t === tag)) {
+            post.tags.push(tag);
+          }
+        };
+        isTagAlready(tag);
+      }
+
+      for (const tag of post.tags) {
+        if (!tags.find((t) => t === tag)) {
+          const deletedTagIndex = post.tags.indexOf(tag);
+          post.tags.splice(deletedTagIndex, 1);
+        }
+      }
+    };
+
+    /*const updateTags = (e: any) => {
       const tagsList = JSON.parse(e.target.value);
       for (const tag of tagsList) {
         const isTagAlready = (tag: any) => {
           console.log(Array.from(post.tags));
           console.log(tag.value);
-          if (!post.tags.find((t) => t === tag.value)) {
+          if (!post.tags.find((t: string) => t === tag.value)) {
             post.tags.push(tag.value);
           }
         };
         isTagAlready(tag);
       }
-      //console.log(tags.value);
-    };
-
-    /*const addPostPrismFix = (content: string) => {
-      addPost(content).then(() => {
-        return;
-      });
     };*/
 
     const debounce = (func: (arg0: any) => void, wait: number | undefined) => {
@@ -152,9 +230,20 @@ export default defineComponent({
       ),
     );
 
+    const minifyNavbar = () => {
+      const menu = document.getElementById('menu');
+      menu!.style.display = 'none';
+      const el = document.getElementById('content');
+      el!.style.marginLeft = '0';
+      el!.style.width = '100%';
+    };
+
+    minifyNavbar();
+
     return {
       updateTags,
-      addPost,
+      addBlogPost,
+      savePost,
       //addPostPrismFix,
       post,
       //postContent,

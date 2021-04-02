@@ -1,11 +1,17 @@
 <template>
-  <div class="posts">
-    <h1 class="content-subhead">Recent posts</h1>
-    <div v-for="post in posts" :key="post.id">
-      <suspense>
-        <Post :postData="post" />
-      </suspense>
+  <div id="home-container" style="display: flex">
+    <div class="posts" style="width: min-content">
+      <h1 class="content-subhead">
+        Recent posts <template v-if="tagName">on {{ tagName }}</template>
+      </h1>
+      <div v-for="post in posts" :key="post.id">
+        <suspense>
+          <!--<Post :postData="post" />-->
+          <PostTrailer :postData="post" />
+        </suspense>
+      </div>
     </div>
+    <PopularTags />
   </div>
 </template>
 
@@ -16,10 +22,14 @@ import {
   onMounted,
   inject,
   getCurrentInstance,
+  watch,
 } from 'vue';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
 import Post from '@/components/post/Post.vue';
+import PostTrailer from '@/components/post/PostTrailer.vue';
+import PopularTags from '@/components/PopularTags.vue';
 import PostForm from '@/views/PostForm.vue';
 import CodeSnippet from '@/components/CodeSnippet.vue';
 import { usePosts } from '@/composable/usePosts';
@@ -27,21 +37,44 @@ import * as Prism from 'prismjs';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import 'prismjs/plugins/line-numbers/prism-line-numbers';
 import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-markdown';
 import 'prismjs/themes/prism-tomorrow.css';
+import router from '@/router';
 export default defineComponent({
   name: 'Home',
   components: {
-    Post,
+    //Post,
+    PostTrailer,
+    PopularTags,
   },
-  async setup() {
+  props: {
+    tagName: String || null,
+  },
+  setup: async function () {
     //const store = useStore()
 
-    const { posts, getPosts } = usePosts();
+    const { posts, getPosts, getPostsByTag } = usePosts();
     const isLogged = inject('isLogged');
+
+    const route = useRoute();
 
     onMounted(() => {
       Prism.highlightAll();
     });
+
+    watch(
+      () => route.name,
+      (name) => {
+        console.log(name);
+        if (name === 'PostsOnTag') {
+          const tagName = String(route.params.tagName);
+          getPostsByTag(tagName);
+        } else if (name === 'Home') {
+          getPosts();
+        }
+      },
+    );
 
     //const posts = computed(() => store.getters.posts)
 
@@ -94,6 +127,9 @@ export default defineComponent({
     font-weight: 500;
     letter-spacing: 0.1em;
     text-align: left;
+    width: 680px;
+    //margin: auto;
+    margin-bottom: 1rem;
   }
 
   .sidebar {
@@ -105,6 +141,11 @@ export default defineComponent({
     .content {
       padding: 2em 3em 0;
       margin-left: 20%;
+
+      .post {
+        width: 680px;
+        margin: auto;
+      }
     }
   }
 

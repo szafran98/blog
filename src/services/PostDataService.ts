@@ -12,7 +12,11 @@ class PostsDataService {
   }
 
   getByTag(tag: string) {
-    return axios.get(`/posts/tag/%23${tag}/`);
+    return axios.get(`/posts/tag/${tag}/`);
+  }
+
+  getMostPopularTags() {
+    return axios.get('/posts/most_popular_tags/');
   }
 
   create(data: NewPost) {
@@ -20,7 +24,7 @@ class PostsDataService {
   }
 
   update(id: number, data: any) {
-    return axios.put(`/posts/${id}/`, data);
+    return axios.put(`/posts/${id}/`, data, TokenDataService.getTokenHeaders());
   }
 
   async delete(id: number) {

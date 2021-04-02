@@ -1,7 +1,7 @@
 <template>
   <div id="layout" class="home pure-g">
     <Navbar />
-    <div class="content pure-u-1 pure-u-md-3-4">
+    <div id="content" class="content pure-u-1 pure-u-md-3-4">
       <Suspense>
         <template #default>
           <router-view />
@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, provide } from 'vue';
+import { onBeforeRouteUpdate, onBeforeRouteLeave } from 'vue-router';
 import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
 import Navbar from '@/components/Navbar.vue';
@@ -52,11 +53,27 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.content {
+  //width: 680px;
+  //margin: auto;
+}
+
 html {
   line-height: 1.15;
 }
+body {
+  margin: 0;
+  padding: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
 *:focus {
   outline: none;
+}
+
+a {
+  text-decoration: none;
 }
 
 #app {
@@ -82,14 +99,6 @@ html {
     &.router-link-exact-active {
       color: #42b983;
       background: #0078e7 !important;
-    }
-  }
-}
-
-.content {
-  @media screen and (min-width: 48em) {
-    .home .pure-u-md-1-4 {
-      width: 10%;
     }
   }
 }

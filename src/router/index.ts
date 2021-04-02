@@ -10,6 +10,12 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
+    path: '/tag/:tagName',
+    name: 'PostsOnTag',
+    component: Home,
+    props: true,
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login,
@@ -18,6 +24,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/add-post',
     name: 'AddPost',
     component: PostForm,
+  },
+  {
+    path: '/edit-post/:id',
+    name: 'EditPost',
+    component: PostForm,
+    props: (route) => ({ id: Number(route.params.id) }),
   },
 ];
 
