@@ -2,6 +2,8 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home from '../views/Home.vue';
 import Login from '@/components/auth/Login.vue';
 import PostForm from '@/views/PostForm.vue';
+import Post from '@/components/post/Post.vue';
+import ReadingList from '@/views/ReadingList.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,6 +16,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PostsOnTag',
     component: Home,
     props: true,
+  },
+  {
+    path: '/post/:id',
+    name: 'Post',
+    component: Post,
+    props: (route) => ({ id: Number(route.params.id) }),
   },
   {
     path: '/login',
@@ -30,6 +38,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'EditPost',
     component: PostForm,
     props: (route) => ({ id: Number(route.params.id) }),
+  },
+  {
+    path: '/reading-list',
+    name: 'ReadingList',
+    component: ReadingList,
   },
 ];
 

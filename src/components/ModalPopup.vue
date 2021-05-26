@@ -1,25 +1,37 @@
 <template>
-  <div class="modal-container-header">
+  <div class="modal-popup">
+    <div class="modal-btn-container">
+      <button
+        class="fas fa-times fa-2x icon-button"
+        @click="closePopup"
+      ></button>
+    </div>
     <h3 style="letter-spacing: 0">
-      Please verify that you are human by clicking sent link on email.
+      {{ message }}
     </h3>
-    <input
+    <!--    <input
       type="button"
       class="pure-button pure-button-primary button-large"
       value="Go to login"
-    />
+    />-->
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { MutationTypes } from '@/store/mutation-types';
 import { useStore } from '@/store';
 
 export default defineComponent({
   name: 'ModalPopup',
   setup() {
-    //const store = useStore();
+    const store = useStore();
+
+    const message = computed(() => store.getters.modal.message);
+
+    const closePopup = () => {
+      store.commit(MutationTypes.CHANGE_MODAL_STATE, false);
+    };
 
     /*const changeModalState = (event: any) => {
           console.log(event.target);
@@ -30,9 +42,31 @@ export default defineComponent({
 
     return {
       //changeModalState,
+      message,
+      closePopup,
     };
   },
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.modal-popup {
+  display: flex;
+  flex-direction: column;
+
+  .modal-btn-container {
+    align-self: flex-end;
+
+    button {
+      &:hover {
+        color: #1f8dd6;
+      }
+    }
+  }
+
+  h3 {
+    //padding: 2em;
+    text-align: center;
+  }
+}
+</style>

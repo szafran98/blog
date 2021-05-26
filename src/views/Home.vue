@@ -1,17 +1,14 @@
 <template>
-  <div id="home-container" style="display: flex">
-    <div class="posts" style="width: min-content">
+  <div id="home-container">
+    <PopularTags />
+    <div class="posts" style="">
       <h1 class="content-subhead">
         Recent posts <template v-if="tagName">on {{ tagName }}</template>
       </h1>
       <div v-for="post in posts" :key="post.id">
-        <suspense>
-          <!--<Post :postData="post" />-->
-          <PostTrailer :postData="post" />
-        </suspense>
+        <PostTrailer :postData="post" />
       </div>
     </div>
-    <PopularTags />
   </div>
 </template>
 
@@ -33,13 +30,13 @@ import PopularTags from '@/components/PopularTags.vue';
 import PostForm from '@/views/PostForm.vue';
 import CodeSnippet from '@/components/CodeSnippet.vue';
 import { usePosts } from '@/composable/usePosts';
-import * as Prism from 'prismjs';
+/*import * as Prism from 'prismjs';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import 'prismjs/plugins/line-numbers/prism-line-numbers';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-markdown';
-import 'prismjs/themes/prism-tomorrow.css';
+import 'prismjs/themes/prism-tomorrow.css';*/
 import router from '@/router';
 export default defineComponent({
   name: 'Home',
@@ -60,7 +57,7 @@ export default defineComponent({
     const route = useRoute();
 
     onMounted(() => {
-      Prism.highlightAll();
+      //Prism.highlightAll();
     });
 
     watch(
@@ -98,15 +95,8 @@ export default defineComponent({
 
 <style lang="scss">
 .home {
-  @media (min-width: 48em) {
-    .sidebar {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-    }
-  }
-
-  @media screen and (min-width: 48em) {
+  //font-size: 17px;
+  /*@media screen and (min-width: 48em) {
     .pure-u-md-1-4,
     .pure-u-md-6-24 {
       width: 20%;
@@ -115,6 +105,61 @@ export default defineComponent({
       word-spacing: normal;
       vertical-align: top;
       text-rendering: auto;
+    }
+  }*/
+
+  @media (min-width: 72em) {
+    #home-container {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+
+      .posts {
+        flex: 3 0 0;
+        max-width: 680px;
+      }
+
+      #popular-tags {
+        flex: 1 0 0;
+        margin-left: 100px;
+        max-width: 20em;
+        top: 75px;
+        position: sticky;
+      }
+    }
+  }
+
+  @media (max-width: 72em) {
+    #home-container {
+      display: block;
+
+      .posts {
+        max-width: 100%;
+      }
+
+      #popular-tags {
+      }
+    }
+  }
+
+  @media (max-width: 50em) {
+    #home-container {
+      .posts {
+        margin-left: 1em;
+        margin-right: 1em;
+      }
+    }
+  }
+
+  @media (max-width: 32em) {
+    #home-container {
+      .posts {
+        margin-left: 1em;
+        margin-right: 1em;
+      }
+
+      #popular-tags {
+      }
     }
   }
 
@@ -127,7 +172,7 @@ export default defineComponent({
     font-weight: 500;
     letter-spacing: 0.1em;
     text-align: left;
-    width: 680px;
+    //width: 680px;
     //margin: auto;
     margin-bottom: 1rem;
   }
@@ -137,19 +182,20 @@ export default defineComponent({
     color: #fff;
   }
 
-  @media (min-width: 48em) {
+  @media (min-width: 10em) {
     .content {
-      padding: 2em 3em 0;
-      margin-left: 20%;
+      //padding: 2em 3em 0;
+      //margin-left: 20%;
 
       .post {
-        width: 680px;
-        margin: auto;
+        //width: 680px;
+        //margin: auto;
+        //margin-top: 200px;
       }
     }
   }
 
-  @media screen and (min-width: 48em) {
+  /*@media screen and (min-width: 48em) {
     .pure-u-md-18-24,
     .pure-u-md-3-4 {
       width: 80%;
@@ -159,7 +205,7 @@ export default defineComponent({
       vertical-align: top;
       text-rendering: auto;
     }
-  }
+  }*/
 
   .brand-title {
     text-transform: uppercase;

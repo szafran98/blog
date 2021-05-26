@@ -68,7 +68,6 @@ import {
 } from 'vue-router';
 import { usePosts } from '@/composable/usePosts';
 import marked from 'marked';
-import { extendNavbar } from '@/utils/util-functions';
 import * as Prism from 'prismjs';
 /*
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
@@ -99,9 +98,7 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
 
-    onBeforeRouteLeave(() => {
-      extendNavbar();
-    });
+    console.log(props);
 
     console.log(router.currentRoute.value.name === 'EditPost');
 
@@ -229,16 +226,6 @@ export default defineComponent({
       }*/,
       ),
     );
-
-    const minifyNavbar = () => {
-      const menu = document.getElementById('menu');
-      menu!.style.display = 'none';
-      const el = document.getElementById('content');
-      el!.style.marginLeft = '0';
-      el!.style.width = '100%';
-    };
-
-    minifyNavbar();
 
     return {
       updateTags,

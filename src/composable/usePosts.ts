@@ -1,16 +1,24 @@
 import { ref, reactive, computed } from 'vue';
-import { useStore } from '@/store';
+import useStore from '@/store';
 import { ActionTypes } from '@/store/action-types';
 import PostDataService from '@/services/PostDataService';
 import { PostResponse } from '@/types/types';
 import NewPost from '@/types/post/NewPost';
 import { AxiosError, AxiosResponse } from 'axios';
+import { MutationTypes } from '@/store/mutation-types';
+import { ModalTypes } from '@/ModalTypes';
 
+const store = useStore;
 const posts = ref([] as PostResponse[]);
 
 export function usePosts() {
-  const getPost = (id: number) => {
-    return posts.value.find((post) => post.id === id);
+  const getPost = async (id: number) => {
+    let post = posts.value.find((post) => post.id === id);
+    if (post === undefined) {
+      const response = await PostDataService.get(id);
+      post = await response.data;
+    }
+    return post;
   };
 
   const getPosts = async () => {
@@ -22,6 +30,15 @@ export function usePosts() {
   const getPostsByTag = async (tag: string) => {
     const response = await PostDataService.getByTag(tag);
     posts.value = await response.data;
+  };
+
+  const getUserReadingList = async () => {
+    try {
+      const response = await PostDataService.getUserReadingList();
+      return response.data;
+    } catch (e) {
+      console.log(e.response);
+    }
   };
 
   const getMostPopularTags = async () => {
@@ -57,14 +74,31 @@ export function usePosts() {
     }
   };
 
+  const likePost = async (postId: number) => {
+    try {
+      const response = await PostDataService.like(postId);
+      console.log(response);
+      return response;
+    } catch (e) {
+      console.log(e.response);
+      store.commit(MutationTypes.CHANGE_MODAL_STATE, {
+        state: true,
+        type: ModalTypes.POPUP,
+        message: e.response.data.message,
+      });
+    }
+  };
+
   return {
     getPost,
     getPosts,
     getPostsByTag,
+    getUserReadingList,
     getMostPopularTags,
     deletePost,
     addPost,
     editPost,
+    likePost,
     posts: computed(() => posts.value),
   };
 }

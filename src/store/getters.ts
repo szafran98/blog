@@ -6,6 +6,7 @@ export type Getters<S = State> = {
   posts(state: State): any;
   userData(state: State): any;
   isLoggedIn(state: State): any;
+  modal(state: State): any;
 };
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -18,5 +19,8 @@ export const getters: GetterTree<State, State> & Getters = {
   },
   isLoggedIn(state: State): boolean {
     return state.userData !== null;
+  },
+  modal(state: State): any {
+    return state.modal;
   },
 };

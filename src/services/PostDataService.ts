@@ -33,6 +33,17 @@ class PostsDataService {
       TokenDataService.getTokenHeaders(),
     );
   }
+
+  like(id: number) {
+    return axios.get(`/posts/${id}/like/`, TokenDataService.getTokenHeaders());
+  }
+
+  getUserReadingList() {
+    return axios.get(
+      '/posts/user_reading_list/',
+      TokenDataService.getTokenHeaders(),
+    );
+  }
 }
 
 export default new PostsDataService();

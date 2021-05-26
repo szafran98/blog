@@ -53,6 +53,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500&family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
 .content {
   //width: 680px;
   //margin: auto;
@@ -70,6 +72,7 @@ body {
 
 *:focus {
   outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a {
