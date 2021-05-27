@@ -44,6 +44,21 @@ class PostsDataService {
       TokenDataService.getTokenHeaders(),
     );
   }
+
+  addToReadingList(id: number) {
+    return axios.post(
+      `/posts/${id}/add_to_reading_list/`,
+      {},
+      TokenDataService.getTokenHeaders(),
+    );
+  }
+
+  removeFromReadingList(id: number) {
+    return axios.delete(
+      `/posts/user_reading_list/${id}`,
+      TokenDataService.getTokenHeaders(),
+    );
+  }
 }
 
 export default new PostsDataService();

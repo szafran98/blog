@@ -7,6 +7,7 @@ import NewPost from '@/types/post/NewPost';
 import { AxiosError, AxiosResponse } from 'axios';
 import { MutationTypes } from '@/store/mutation-types';
 import { ModalTypes } from '@/ModalTypes';
+import TokenDataService from '@/services/TokenDataService';
 
 const store = useStore;
 const posts = ref([] as PostResponse[]);
@@ -36,6 +37,24 @@ export function usePosts() {
     try {
       const response = await PostDataService.getUserReadingList();
       return response.data;
+    } catch (e) {
+      console.log(e.response);
+    }
+  };
+
+  const addToReadingList = async (id: number) => {
+    try {
+      const response = PostDataService.addToReadingList(id);
+      return response;
+    } catch (e) {
+      console.log(e.response);
+    }
+  };
+
+  const removeFromReadingList = async (id: number) => {
+    try {
+      const response = PostDataService.removeFromReadingList(id);
+      return response;
     } catch (e) {
       console.log(e.response);
     }
@@ -94,6 +113,8 @@ export function usePosts() {
     getPosts,
     getPostsByTag,
     getUserReadingList,
+    addToReadingList,
+    removeFromReadingList,
     getMostPopularTags,
     deletePost,
     addPost,

@@ -5,7 +5,11 @@
       <PostTrailer :postData="post" />
       <div style="margin-bottom: 1em">
         <span
-          ><button class="far fa-trash-alt icon-button"></button> Remove</span
+          ><button
+            class="far fa-trash-alt icon-button"
+            @click="removeFromReadingList(post.id)"
+          ></button>
+          Remove</span
         >
         &#9642;
         <span><button class="far fa-folder icon-button"></button> Archive</span>
@@ -27,12 +31,13 @@ export default defineComponent({
     PostTrailer,
   },
   async setup() {
-    const { getUserReadingList } = usePosts();
+    const { getUserReadingList, removeFromReadingList } = usePosts();
 
     const posts = await getUserReadingList();
 
     return {
       posts,
+      removeFromReadingList,
     };
   },
 });

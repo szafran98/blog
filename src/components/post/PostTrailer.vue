@@ -21,8 +21,11 @@
         <div class="post-pub-date">
           {{ postDatePub }} &#9642; {{ readingTime() }} min read
         </div>
-        <div class="post-footer-buttons">
-          <button class="far fa-bookmark"></button>
+        <div class="post-footer-buttons" v-if="isLogged">
+          <button
+            class="far fa-bookmark"
+            @click="addToReadingList(postData.id)"
+          ></button>
           <component :is="dropdownButtonElement" />
         </div>
       </div>
@@ -34,10 +37,19 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, h, PropType, reactive } from 'vue';
+import {
+  computed,
+  defineComponent,
+  ref,
+  h,
+  PropType,
+  reactive,
+  inject,
+} from 'vue';
 import PostDropdownMenu from '@/components/post/PostDropdownMenu.vue';
 import { PostResponse } from '@/types/types.ts';
 import { useTippy } from 'vue-tippy';
+import { usePosts } from '@/composable/usePosts';
 
 export default defineComponent({
   name: 'PostTrailer',
@@ -52,6 +64,10 @@ export default defineComponent({
   },
   setup(props) {
     const showDropdownMenu = ref(false);
+
+    const { addToReadingList } = usePosts();
+
+    const isLogged = inject('isLogged');
 
     const postDatePub = computed(() => {
       return new Date(
@@ -91,8 +107,10 @@ export default defineComponent({
     return {
       showDropdownMenu,
       postDatePub,
+      isLogged,
       readingTime,
       dropdownButtonElement,
+      addToReadingList,
     };
   },
 });
