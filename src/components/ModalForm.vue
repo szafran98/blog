@@ -20,8 +20,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
-import Login from '@/components/auth/Login.vue';
-import Register from '@/components/auth/Register.vue';
+import Login from '@/components/Auth/AppLogin.vue';
+import Register from '@/components/Auth/AppRegister.vue';
 import { MutationTypes } from '@/store/mutation-types';
 import { useStore } from '@/store';
 

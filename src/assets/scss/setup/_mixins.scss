@@ -1,0 +1,9 @@
+
+@mixin inherited-a-tag {
+  a {
+    color: inherit;
+  }
+  /deep/ a {
+    color: inherit;
+  }
+}

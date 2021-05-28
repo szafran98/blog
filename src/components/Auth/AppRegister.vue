@@ -46,9 +46,9 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, computed } from 'vue';
-import InputUsername from '@/components/form/InputUsername.vue';
-import InputEmail from '@/components/form/InputEmail.vue';
-import InputPassword from '@/components/form/InputPassword.vue';
+import InputUsername from '@/components/Form/InputUsername.vue';
+import InputEmail from '@/components/Form/InputEmail.vue';
+import InputPassword from '@/components/Form/InputPassword.vue';
 import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
 import {

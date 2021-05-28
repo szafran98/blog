@@ -23,7 +23,7 @@ import { defineComponent, defineAsyncComponent } from 'vue';
 import { useStore } from '../store';
 import { usePosts } from '@/composable/usePosts';
 
-import PostTrailer from '@/components/post/PostTrailer.vue';
+import PostTrailer from '@/components/PostTrailer/index.vue';
 
 export default defineComponent({
   name: 'ReadingList',
@@ -43,7 +43,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .reading-list-container {
   max-width: 680px;
   border-bottom: 1px solid #eee;
@@ -53,7 +53,6 @@ export default defineComponent({
       cursor: pointer;
     }
   }
-
   .post-trailer-container {
     margin: 0;
 

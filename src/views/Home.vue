@@ -24,8 +24,8 @@ import {
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
-import Post from '@/components/post/Post.vue';
-import PostTrailer from '@/components/post/PostTrailer.vue';
+import Post from '@/components/Post/index.vue';
+import PostTrailer from '@/components/PostTrailer/index.vue';
 import PopularTags from '@/components/PopularTags.vue';
 import PostForm from '@/views/PostForm.vue';
 import CodeSnippet from '@/components/CodeSnippet.vue';

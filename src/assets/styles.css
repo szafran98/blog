@@ -147,7 +147,7 @@ h3 {
     text-shadow: 0 1px 1px #333;
 }
 
-.footer {
+/*.footer {
     padding: 1em 0;
 }
 .footer a {
@@ -157,7 +157,7 @@ h3 {
 .footer .pure-menu a:hover,
 .footer .pure-menu a:focus {
     background: none;
-}
+}*/
 
 @media (min-width: 48em) {
     .content {
@@ -176,7 +176,7 @@ h3 {
         bottom: 0;
     }*/
 
-    .footer {
+    /*.footer {
         text-align: center;
-    }
+    }*/
 }

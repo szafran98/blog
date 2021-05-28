@@ -13,7 +13,7 @@
 <script lang="ts">
 import { defineComponent, toRef } from 'vue';
 import useInputValidator from '../../composable/useInputValidator';
-import ErrorDisplay from '@/components/form/ErrorDisplay.vue';
+import ErrorDisplay from '@/components/Form/ErrorDisplay.vue';
 
 export default defineComponent({
   name: 'InputPassword',

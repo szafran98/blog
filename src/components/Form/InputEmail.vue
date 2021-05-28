@@ -1,9 +1,9 @@
 <template>
-  <div id="username-container">
+  <div id="email-container">
     <input
-      id="stacked-username"
-      type="text"
-      placeholder="Username"
+      id="stacked-email"
+      type="email"
+      placeholder="Email"
       v-model="input"
     />
     <ErrorDisplay :errors="errors" />
@@ -12,12 +12,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import useInputValidator from '@/composable/useInputValidator';
-import ErrorDisplay from '@/components/form/ErrorDisplay.vue';
-import { minLength } from '@/composable/useInputValidator';
+import useInputValidator, {
+  isEmailAvailable,
+} from '../../composable/useInputValidator';
+import { isEmail } from '@/composable/useInputValidator';
+import ErrorDisplay from '@/components/Form/ErrorDisplay.vue';
 
 export default defineComponent({
-  name: 'InputUsername',
+  name: 'InputEmail',
   components: {
     ErrorDisplay,
   },
@@ -30,6 +32,7 @@ export default defineComponent({
   },
   emits: ['input'],
   setup(props: any, { emit }) {
+    //console.log(props.validators);
     const { input, errors } = useInputValidator(
       props.value,
       props.validators,
@@ -44,8 +47,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
-#stacked-username {
-  width: 100%;
-}
-</style>
+<style scoped></style>

@@ -41,8 +41,8 @@ import useInputValidator from '@/composable/useInputValidator';
 import { isEmail, minLength } from '@/composable/useInputValidator';
 import { ActionTypes } from '@/store/action-types';
 import { MutationTypes } from '@/store/mutation-types';
-import InputEmail from '@/components/form/InputEmail.vue';
-import InputPassword from '@/components/form/InputPassword.vue';
+import InputEmail from '@/components/Form/InputEmail.vue';
+import InputPassword from '@/components/Form/InputPassword.vue';
 
 export default defineComponent({
   name: 'Login',

@@ -20,8 +20,8 @@ import { defineComponent, computed, provide } from 'vue';
 import { onBeforeRouteUpdate, onBeforeRouteLeave } from 'vue-router';
 import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
-import Navbar from '@/components/Navbar.vue';
-import Modal from '@/components/Modal.vue';
+import Navbar from '@/components/TheNavbar.vue';
+import Modal from '@/components/TheModal.vue';
 
 function getUserData() {
   return useStore().getters.userData;

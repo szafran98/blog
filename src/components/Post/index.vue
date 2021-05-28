@@ -26,16 +26,6 @@
             {{ postDatePub }} &#9642; {{ readingTime() }} min read
           </div>
         </div>
-        <!--<div :id="'post' + id + '-categories'" style="margin-top: 10px">
-          <template v-for="(tag, index) in postData.tags" :key="index">
-            <router-link
-              :to="{ name: 'PostsOnTag', params: { tagName: tag } }"
-              :id="'post' + id + 'category' + tag"
-              class="post-category"
-              >{{ tag }}</router-link
-            >
-          </template>
-        </div>-->
         <img class="post-image" :src="post.image" alt="" />
       </div>
     </header>
@@ -127,7 +117,7 @@ import marked from 'marked';
 //import typescript from 'highlight.js/lib/languages/typescript';
 import { PostResponse } from '@/types/types';
 import { useTippy } from 'vue-tippy';
-import PostDropdownMenu from '@/components/post/PostDropdownMenu.vue';
+import PostDropdownMenu from '@/components/Post/PostDropdownMenu.vue';
 //import { highlightAll } from 'prismjs';
 
 //hljs.registerLanguage('typescript', typescript);
