@@ -1,5 +1,5 @@
 <template>
-  <div class="post-trailer">
+  <div class="post-trailer" v-cloak>
     <div class="post-trailer__meta">
       <PostTrailerAuthor :author="postData.author" />
       <PostTrailerTitle :title="postData.title" :id="postData.id" />
@@ -7,7 +7,7 @@
         :description="postData.description"
         :id="postData.id"
       />
-      <PostTrailerFooter :postData="postData" />
+      <PostTrailerFooter :post="postData" />
     </div>
     <PostTrailerImage :image="postData.image" :id="postData.id" />
   </div>
@@ -58,17 +58,26 @@ export default defineComponent({
 @import 'src/assets/scss/setup/mixins';
 @import 'src/assets/scss/setup/variables';
 
+[v-cloak] {
+  display: none;
+}
+
 //////////////////////////////////////////////////////////////
 /////////////////// Phone Vertical ///////////////////////////
 //////////////////////////////////////////////////////////////
 
-@include respond-to(extra-small) {
-  .post-trailer {
-    justify-content: space-between;
-  }
-  .post-trailer__meta {
-    flex: 2 0 0;
-  }
+.post-trailer {
+  @include inherited-a-tag;
+
+  line-height: 20px;
+  margin-bottom: 48px;
+  justify-content: space-between;
+  display: flex;
+  gap: 10px;
+}
+.post-trailer__meta {
+  flex: 2 0 0;
+  width: 100%;
 }
 
 //////////////////////////////////////////////////////////////
@@ -82,24 +91,6 @@ export default defineComponent({
   .post-trailer__meta {
     //width: 100%;
   }
-}
-
-//////////////////////////////////////////////////////////////
-/////////////////// All queries //////////////////////////////
-//////////////////////////////////////////////////////////////
-
-.post-trailer {
-  @include inherited-a-tag;
-
-  line-height: 20px;
-  margin-bottom: 48px;
-  justify-content: space-between;
-  display: flex;
-  gap: 10px;
-}
-
-.post-trailer__meta {
-  width: 100%;
 }
 
 /*@media screen and (max-width: 32em) {

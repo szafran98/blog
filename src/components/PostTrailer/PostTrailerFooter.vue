@@ -6,7 +6,7 @@
     <div class="footer__buttons" v-if="isLogged">
       <button
         class="far fa-bookmark"
-        @click="addToReadingList(postData.id)"
+        @click="addToReadingList(post.id)"
       ></button>
       <component :is="dropdownButtonElement" />
     </div>
@@ -19,11 +19,15 @@ import { PostResponse } from '@/types/types';
 import { usePosts } from '@/composable/usePosts';
 import { useTippy } from 'vue-tippy';
 import PostDropdownMenu from '@/components/Post/PostDropdownMenu.vue';
+import {
+  calculatePostReadingTime,
+  getFormattedPostDate,
+} from '@/common/mixins/PostMixin';
 
 export default defineComponent({
   name: 'PostTrailerFooter',
   props: {
-    postData: {
+    post: {
       type: Object as PropType<PostResponse>,
       required: true,
     },
@@ -33,23 +37,13 @@ export default defineComponent({
 
     const isLogged = inject('isLogged');
 
-    const readingTime = computed(() => {
-      const text: string = props.postData.content;
-      const wpm = 225;
-      const words = text.trim().split(/\s+/).length;
-      const time = Math.ceil(words / wpm);
-      return time;
-    });
+    const readingTime = computed(() =>
+      calculatePostReadingTime(props.post.content),
+    );
 
-    const postDatePub = computed(() => {
-      return new Date(
-        props.postData.date_pub_timestamp * 1000,
-      ).toLocaleDateString('en-EN', {
-        month: 'short',
-        day: '2-digit',
-        year: 'numeric',
-      });
-    });
+    const postDatePub = computed(() =>
+      getFormattedPostDate(props.post.date_pub_timestamp),
+    );
 
     const dropdownButton = ref();
     const dropdownButtonElement = () =>
@@ -82,12 +76,23 @@ export default defineComponent({
 <style scoped lang="scss">
 @import 'src/assets/scss/setup/variables';
 
-@include respond-to(extra-small) {
-  .footer {
-    font-size: 13px;
-  }
-  .footer__reading-time {
-    flex: 8 0 0;
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+}
+.footer__reading-time {
+  flex: 8 0 0;
+}
+
+.footer__buttons {
+  & > button {
+    border: none;
+    background: inherit;
+    cursor: pointer;
   }
 }
 
@@ -99,23 +104,6 @@ export default defineComponent({
   .footer__buttons {
     & > button {
     }
-  }
-}
-
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-}
-.footer__reading-time {
-}
-.footer__buttons {
-  & > button {
-    border: none;
-    background: inherit;
-    cursor: pointer;
   }
 }
 </style>

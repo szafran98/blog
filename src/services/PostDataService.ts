@@ -35,7 +35,11 @@ class PostsDataService {
   }
 
   like(id: number) {
-    return axios.get(`/posts/${id}/like/`, TokenDataService.getTokenHeaders());
+    return axios.post(
+      `/posts/${id}/like/`,
+      {},
+      TokenDataService.getTokenHeaders(),
+    );
   }
 
   getUserReadingList() {

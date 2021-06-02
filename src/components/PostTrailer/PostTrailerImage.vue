@@ -25,11 +25,9 @@ export default defineComponent({
 <style scoped lang="scss">
 @import 'src/assets/scss/setup/variables';
 
-@include respond-to(extra-small) {
-  .post-trailer__image {
-    width: 123px;
-    height: 100px;
-  }
+.post-trailer__image {
+  width: 123px;
+  height: 100px;
 }
 
 @include respond-to(large) {

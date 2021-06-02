@@ -33,7 +33,7 @@ export interface Actions {
   ): Promise<any>;
   [ActionTypes.GET_USER_DATA]({
     commit,
-  }: AugmentedActionContext): Promise<void>;
+  }: AugmentedActionContext): Promise<void> | void;
   [ActionTypes.LOGOUT]({ commit }: AugmentedActionContext): void;
 }
 
@@ -75,13 +75,25 @@ export const actions: ActionTree<State, State> & Actions = {
     TokenDataService.removeToken();
     commit(MutationTypes.REMOVE_USER_DATA);
   },
-  [ActionTypes.GET_USER_DATA]({ commit }) {
+  [ActionTypes.GET_USER_DATA]({ commit, dispatch }) {
+    if (!TokenDataService.getAccessToken()) return;
     return axios
       .get(
         'http://127.0.0.1:8000/auth/users/me/',
         TokenDataService.getTokenHeaders(),
       )
       .then((res) => commit(MutationTypes.STORE_USER_DATA, res.data))
-      .catch((err) => console.log(err.response));
+      .catch(() => {
+        if (
+          !TokenDataService.isRefreshTokenTerminated() &&
+          TokenDataService.isAccessTokenTerminated()
+        ) {
+          TokenDataService.refreshTokenApiRequest().then(() => {
+            dispatch(ActionTypes.GET_USER_DATA);
+          });
+        } else {
+          TokenDataService.removeToken();
+        }
+      });
   },
 };

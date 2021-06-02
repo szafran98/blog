@@ -7,3 +7,26 @@
     color: inherit;
   }
 }
+
+@mixin icon-button {
+  border: none;
+  background: inherit;
+  cursor: pointer;
+}
+
+@mixin author-avatar {
+  width: 50px;
+  border-radius: 90px;
+}
+
+@mixin follow-button {
+  border: none;
+  border-radius: 45px;
+  color: white;
+  background: #2d98f5;
+  letter-spacing: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}

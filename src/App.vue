@@ -1,7 +1,7 @@
 <template>
-  <div id="layout" class="home pure-g">
+  <div id="layout" class="home">
     <Navbar />
-    <div id="content" class="content pure-u-1 pure-u-md-3-4">
+    <div id="content" class="content">
       <Suspense>
         <template #default>
           <router-view />
@@ -58,10 +58,12 @@ export default defineComponent({
 .content {
   //width: 680px;
   //margin: auto;
+  margin-left: 250px;
 }
 
 html {
   line-height: 1.15;
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;

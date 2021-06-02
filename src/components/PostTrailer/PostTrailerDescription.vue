@@ -27,10 +27,10 @@ export default defineComponent({
 <style scoped lang="scss">
 @import 'src/assets/scss/setup/variables';
 
-@include respond-to(extra-small) {
-  .description {
-    display: none;
-  }
+.description {
+  display: none;
+  color: rgba(117, 117, 117, 1);
+  margin: 0;
 }
 
 @include respond-to(large) {
@@ -40,12 +40,5 @@ export default defineComponent({
     font-weight: 400;
     margin: 0;
   }
-}
-
-.description {
-  color: rgba(117, 117, 117, 1);
-  //font-size: 16px;
-  //font-weight: 400;
-  margin: 0;
 }
 </style>

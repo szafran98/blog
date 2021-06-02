@@ -27,14 +27,12 @@ export default defineComponent({
 <style scoped lang="scss">
 @import 'src/assets/scss/setup/variables';
 
-@include respond-to(extra-small) {
-  .title {
-    //font-size: 16px;
-    //font-family: 'Roboto', sans-serif;
-    //font-weight: 600;
-    //color: black;
-    //padding-right: 1em;
-  }
+.title {
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  color: black;
+  padding-right: 1em;
 }
 
 @include respond-to(large) {
@@ -42,13 +40,5 @@ export default defineComponent({
     font-size: 22px;
     margin: 0;
   }
-}
-
-.title {
-  font-size: 16px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 600;
-  color: black;
-  padding-right: 1em;
 }
 </style>

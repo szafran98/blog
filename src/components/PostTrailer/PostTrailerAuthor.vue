@@ -29,15 +29,25 @@ export default defineComponent({
 /////////////////// Phone Vertical ///////////////////////////
 //////////////////////////////////////////////////////////////
 
-@include respond-to(extra-small) {
-  .author {
-    font-size: 13px;
-    font-weight: 600;
+.author {
+  font-size: 13px;
+  font-weight: 600;
+  vertical-align: super;
 
-    & > span {
-      color: #3d4f5d;
-    }
+  & > span {
+    color: #3d4f5d;
   }
+}
+
+.author__link {
+  margin: 0;
+  padding: 0;
+  //color: rgba(0, 0, 0, 0.8);
+  color: rgba(41, 41, 41, 1);
+  max-height: 16px;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 500;
 }
 
 @include respond-to(large) {
@@ -54,19 +64,5 @@ export default defineComponent({
     line-height: 16px;
     font-weight: 500;
   }
-}
-
-.author {
-  vertical-align: super;
-}
-.author__link {
-  margin: 0;
-  padding: 0;
-  //color: rgba(0, 0, 0, 0.8);
-  color: rgba(41, 41, 41, 1);
-  max-height: 16px;
-  font-size: 16px;
-  line-height: 16px;
-  font-weight: 500;
 }
 </style>

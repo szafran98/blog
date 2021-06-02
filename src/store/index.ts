@@ -10,6 +10,7 @@ import {
 import { Mutations, mutations } from '@/store/mutations';
 import { Getters, getters } from '@/store/getters';
 import { Actions, actions } from '@/store/actions';
+import { Author, PostResponse } from '@/types/types';
 
 export type Store = Omit<
   VuexStore<State>,
@@ -34,15 +35,19 @@ export type Store = Omit<
 
 // define your typings for the store state
 export interface State {
-  posts: any[];
-  userData: any;
+  posts: PostResponse[];
+  userData: Author | null;
   modal: any;
+  postTopRef: Element | null;
+  postBottomRef: Element | null;
 }
 
 export const state: State = {
   posts: [],
   userData: null,
   modal: false,
+  postTopRef: null,
+  postBottomRef: null,
 };
 
 // define injection key

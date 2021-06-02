@@ -1,5 +1,5 @@
 <template>
-  <div id="popular-tags" style="display: flex; flex-direction: column">
+  <div id="popular-tags" style="display: flex; flex-direction: column" v-cloak>
     <h4>Popular tags</h4>
     <div id="popular-tags-list">
       <router-link
@@ -43,6 +43,10 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+[v-cloak] {
+  display: none;
+}
+
 @media screen and (max-width: 72em) {
   #popular-tags {
     margin-top: 1em;
@@ -60,6 +64,12 @@ export default defineComponent({
   //justify-content: center;
   //column-gap: 10px;
   //grid-row-gap: 10px;
+
+  flex: 1 0 0;
+  margin-left: 100px;
+  max-width: 20em;
+  top: 75px;
+  position: sticky;
 
   #popular-tags-list {
     display: flex;

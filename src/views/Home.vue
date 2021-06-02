@@ -1,6 +1,6 @@
 <template>
-  <div id="home-container">
-    <PopularTags />
+  <div id="home-container" v-cloak>
+    <PopularTags v-cloak />
     <div class="posts" style="">
       <h1 class="content-subhead">
         Recent posts <template v-if="tagName">on {{ tagName }}</template>
@@ -60,6 +60,8 @@ export default defineComponent({
       //Prism.highlightAll();
     });
 
+    console.log(posts.value);
+
     watch(
       () => route.name,
       (name) => {
@@ -83,7 +85,10 @@ export default defineComponent({
     }
 
        */
-    await getPosts();
+
+    if (posts.value.length === 0) {
+      await getPosts();
+    }
 
     return {
       posts,
@@ -93,7 +98,11 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+[v-cloak] {
+  display: none;
+}
+
 .home {
   //font-size: 17px;
   /*@media screen and (min-width: 48em) {
@@ -117,14 +126,6 @@ export default defineComponent({
       .posts {
         flex: 3 0 0;
         max-width: 680px;
-      }
-
-      #popular-tags {
-        flex: 1 0 0;
-        margin-left: 100px;
-        max-width: 20em;
-        top: 75px;
-        position: sticky;
       }
     }
   }
