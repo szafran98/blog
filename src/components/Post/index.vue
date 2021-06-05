@@ -99,9 +99,21 @@ export default defineComponent({
   margin-right: 1.5em;
 }
 
+@include respond-to(small-landscape) {
+  .post {
+  }
+}
+
+@include respond-to(medium) {
+  .post {
+    width: 680px;
+    margin: auto;
+  }
+}
+
 @include respond-to(large) {
   .post {
-    max-width: 680px;
+    width: 680px;
     margin: auto;
   }
 }

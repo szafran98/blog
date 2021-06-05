@@ -10,8 +10,6 @@ export type Mutations<S = State> = {
   [MutationTypes.STORE_USER_DATA](state: S, payload: any): void;
   [MutationTypes.REMOVE_USER_DATA](state: S): void;
   [MutationTypes.CHANGE_MODAL_STATE](state: S, payload: any): void;
-  [MutationTypes.SET_POST_TOP_REF](state: S, payload: any): void;
-  [MutationTypes.SET_POST_BOTTOM_REF](state: S, payload: any): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -39,14 +37,5 @@ export const mutations: MutationTree<State> & Mutations = {
     console.log(payload);
     state.modal = payload;
     console.log(state.modal);
-  },
-  [MutationTypes.SET_POST_TOP_REF](state: State, payload: any) {
-    console.log(payload);
-    state.postTopRef = payload;
-    console.log(state.postTopRef);
-  },
-  [MutationTypes.SET_POST_BOTTOM_REF](state: State, payload: any) {
-    console.log(payload);
-    state.postBottomRef = payload;
   },
 };

@@ -38,16 +38,12 @@ export interface State {
   posts: PostResponse[];
   userData: Author | null;
   modal: any;
-  postTopRef: Element | null;
-  postBottomRef: Element | null;
 }
 
 export const state: State = {
   posts: [],
   userData: null,
   modal: false,
-  postTopRef: null,
-  postBottomRef: null,
 };
 
 // define injection key

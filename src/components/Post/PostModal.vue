@@ -89,6 +89,15 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.post-modal {
+}
+
+@media (max-width: 1500px) {
+  .post-modal {
+    display: none;
+  }
+}
+
 @include respond-to(large) {
   .post-modal {
     width: 200px;

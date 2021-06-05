@@ -1,7 +1,7 @@
 <template>
-  <div id="layout" class="home">
+  <div id="layout" class="layout" v-cloak v-show="arePostsLoaded">
     <Navbar />
-    <div id="content" class="content">
+    <div id="content" class="layout__content content">
       <Suspense>
         <template #default>
           <router-view />
@@ -10,34 +10,36 @@
           <h1>Loading...</h1>
         </template>
       </Suspense>
+      <TheFooter />
     </div>
     <Modal v-if="modal.state" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, provide } from 'vue';
+import { defineComponent, computed, provide, onMounted } from 'vue';
 import { onBeforeRouteUpdate, onBeforeRouteLeave } from 'vue-router';
 import { useStore } from '@/store';
 import { ActionTypes } from '@/store/action-types';
 import Navbar from '@/components/TheNavbar.vue';
 import Modal from '@/components/TheModal.vue';
-
-function getUserData() {
-  return useStore().getters.userData;
-}
+import TheFooter from '@/components/TheFooter.vue';
+import { usePosts } from '@/composable/usePosts';
 
 export default defineComponent({
   name: 'App',
   components: {
     Navbar,
     Modal,
+    TheFooter,
   },
   setup() {
     const store = useStore();
-    //let isFetching = ref(true)
-    //let userData
+    const { posts, arePostsLoaded, getPosts } = usePosts();
+
     const modal = computed(() => store.state.modal);
+
+    onMounted(async () => await getPosts());
 
     provide(
       'isLogged',
@@ -45,7 +47,9 @@ export default defineComponent({
     );
 
     store.dispatch(ActionTypes.GET_USER_DATA);
+
     return {
+      arePostsLoaded,
       modal,
     };
   },
@@ -55,10 +59,49 @@ export default defineComponent({
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500&family=Roboto:wght@300;400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
-.content {
+
+[v-cloak] {
+  display: none;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.layout__content {
   //width: 680px;
   //margin: auto;
-  margin-left: 250px;
+  margin-left: 0;
+}
+
+@include respond-to(small) {
+  .layout__content {
+    margin-left: 0;
+  }
+}
+
+@include respond-to(small-landscape) {
+  .layout__content {
+    margin-left: 250px;
+  }
+}
+
+@include respond-to(medium) {
+  .layout__content {
+    margin-left: 250px;
+  }
+}
+
+@include respond-to(large) {
+  .layout__content {
+    margin-left: 250px;
+  }
+}
+
+.layout {
+  //display: flex;
 }
 
 html {
@@ -90,8 +133,8 @@ a {
 }
 
 .router-link-exact-active {
-  background: #42b983 !important;
-  color: #222222 !important;
+  background: #42b983;
+  color: #222222;
 }
 
 #nav {
@@ -103,7 +146,7 @@ a {
 
     &.router-link-exact-active {
       color: #42b983;
-      background: #0078e7 !important;
+      background: #0078e7;
     }
   }
 }

@@ -1,12 +1,12 @@
 <template>
-  <div id="popular-tags" style="display: flex; flex-direction: column" v-cloak>
-    <h4>Popular tags</h4>
-    <div id="popular-tags-list">
+  <div class="tags" v-cloak>
+    <h4 class="tags__header">Popular tags</h4>
+    <div id="popular-tags-list" class="tags__list list">
       <router-link
         to=""
         v-for="(tag, index) in tenMostPopularTags"
         :key="index"
-        class="post-category"
+        class="post-category list__element"
         >{{ tag }}</router-link
       >
     </div>
@@ -47,7 +47,63 @@ export default defineComponent({
   display: none;
 }
 
-@media screen and (max-width: 72em) {
+.tags {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0;
+
+  background-color: rgb(250, 250, 250);
+  padding: 1.5em;
+  margin-bottom: 2em;
+
+  height: fit-content;
+  //min-width: 50px;
+  //max-width: 20em;
+}
+
+.tags__list {
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.list__element {
+  @include post-tag;
+  flex: 1 0 auto;
+  margin: 0 0.1em;
+  //padding: 0.3em 1em;
+  //color: #fff;
+  //background: #999;
+  //font-size: 80%;
+  position: relative;
+  height: fit-content;
+  text-align: center;
+
+  &:hover {
+    box-shadow: 2px 2px 2px 2px #ccc;
+  }
+}
+
+@include respond-to(medium) {
+  .tags {
+    //width: 100%;
+  }
+}
+
+@include respond-to(large) {
+  .tags {
+    min-width: 50px;
+    max-width: 20em;
+  }
+}
+
+/*@media screen and (max-width: 72em) {
   #popular-tags {
     margin-top: 1em;
   }
@@ -60,11 +116,6 @@ export default defineComponent({
   height: fit-content;
   min-width: 50px;
   display: flex;
-  //flex-wrap: wrap;
-  //justify-content: center;
-  //column-gap: 10px;
-  //grid-row-gap: 10px;
-
   flex: 1 0 0;
   margin-left: 100px;
   max-width: 20em;
@@ -91,5 +142,5 @@ export default defineComponent({
       text-align: center;
     }
   }
-}
+}*/
 </style>

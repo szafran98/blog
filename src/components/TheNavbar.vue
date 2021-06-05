@@ -1,31 +1,4 @@
 <template>
-  <!--<a href="#menu" id="menuLink" class="menu-link" @click="changeNavbarState">
-    <span></span>
-  </a>
-
-  <div id="menu">
-    <div class="pure-menu">
-      <a href="#company" class="pure-menu-heading">Compoany</a>
-
-      <ul class="pure-menu-list">
-        <li class="pure-menu-item">
-          <a href="#home" class="pure-menu-link">Home</a>
-        </li>
-        <li class="pure-menu-item">
-          <a href="#about" class="pure-menu-link">About</a>
-        </li>
-
-        <li class="pure-menu-item menu-item-divided pure-menu-selected">
-          <a href="#" class="pure-menu-link">Services</a>
-        </li>
-
-        <li class="pure-menu-item">
-          <a href="#contact" class="pure-menu-link">Contact</a>
-        </li>
-      </ul>
-    </div>
-  </div>-->
-
   <a href="#menu" id="menuLink" class="menu-link" @click="changeNavbarState">
     <!--<i id="hamburger-icon" class="fas fa-bars fa-2x" style="color: white"></i>-->
     <span></span>
@@ -33,8 +6,8 @@
 
   <div id="menu" class="sidebar <!--pure-u-1 pure-u-md-1-4-->">
     <div class="header">
-      <h1 class="brand-title">A sample blog</h1>
-      <h2 class="brand-tagline">Creating a blog layout</h2>
+      <img src="@/assets/images/logo-compact.png" alt="" />
+      <!--      <h2 class="brand-tagline">Creating a blog layout</h2>-->
       <nav class="nav">
         <ul class="nav-list">
           <li class="nav-item">
@@ -283,7 +256,7 @@ export default defineComponent({
   margin-top: 0.6em;
 }
 
-@media (min-width: 50em) {
+@include respond-to(small-landscape) {
   .header,
   .content {
     padding-left: 2em;
@@ -309,7 +282,7 @@ export default defineComponent({
   }
 }
 
-@media (max-width: 50em) {
+@media (max-width: 768px) {
   #layout.active {
     position: relative;
     left: 250px;

@@ -2,12 +2,14 @@
   <div id="post-bottom" class="footer">
     <div class="tags-list" style="margin-top: 10px">
       <template v-for="(tag, index) in post.tags" :key="index">
-        <router-link
-          :to="{ name: 'PostsOnTag', params: { tagName: tag } }"
-          :id="'post' + id + 'category' + tag"
-          class="tags-list__link post-category"
-          >{{ tag }}</router-link
-        >
+        <!--        <router-link-->
+        <!--          :to="{ name: 'PostsOnTag', params: { tagName: tag } }"-->
+        <!--          :id="'post' + id + 'category' + tag"-->
+        <!--          class="tags-list__link post-category"-->
+        <!--          >{{ tag }}</router-link>-->
+        <AppTag :tag="tag">
+          {{ tag }}
+        </AppTag>
       </template>
     </div>
     <div class="footer__buttons">
@@ -55,12 +57,16 @@ import { defineComponent, h, PropType, ref, onMounted } from 'vue';
 import { PostResponse } from '@/types/types';
 import { useTippy } from 'vue-tippy';
 import PostDropdownMenu from '@/components/Post/PostDropdownMenu.vue';
+import AppTag from '@/components/AppTag.vue';
 import { usePosts } from '@/composable/usePosts';
 import { useStore } from '@/store';
 import { MutationTypes } from '@/store/mutation-types';
 
 export default defineComponent({
   name: 'PostFooter',
+  components: {
+    AppTag,
+  },
   props: {
     post: {
       type: Object as PropType<PostResponse>,
@@ -115,6 +121,8 @@ export default defineComponent({
 }
 
 .tags-list {
+  display: flex;
+  border-top: 3px solid #eee;
 }
 .tags-list__link {
 }

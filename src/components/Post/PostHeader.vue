@@ -52,6 +52,8 @@ export default defineComponent({
   setup(props, { emit }) {
     const store = useStore();
 
+    const isLoggedIn = computed(() => store.getters.isLoggedIn);
+
     const readingTime = computed(() =>
       calculatePostReadingTime(props.post.content),
     );
@@ -78,6 +80,7 @@ export default defineComponent({
     });
 
     return {
+      isLoggedIn,
       readingTime,
       postDatePub,
       dropdownButtonElement,

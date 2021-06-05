@@ -11,6 +11,7 @@ import TokenDataService from '@/services/TokenDataService';
 
 const store = useStore;
 const posts = ref([] as PostResponse[]);
+//const arePostsLoaded = computed(() => posts.value.length > 0)
 
 export function usePosts() {
   const getPost = async (id: number) => {
@@ -25,7 +26,6 @@ export function usePosts() {
   const getPosts = async () => {
     const response = await PostDataService.getAll();
     posts.value = await response.data;
-    console.log(posts.value);
   };
 
   const getPostsByTag = async (tag: string) => {
@@ -121,5 +121,6 @@ export function usePosts() {
     editPost,
     likePost,
     posts: computed(() => posts.value),
+    arePostsLoaded: computed(() => posts.value.length > 0),
   };
 }
